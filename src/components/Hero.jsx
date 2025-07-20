@@ -1,13 +1,17 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Button from './Button'
 import { TiLocationArrow } from 'react-icons/ti';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
     const [currentVideoIndex, setCurrentVideoIndex] = useState(1);
     const [hasClickedMiniVideo, setHasClickedMiniVideo] = useState(false);
-    const [isLoadingMiniVideo, setIsLoadingMiniVideo] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [loadedMiniVideos, setLoadedMiniVideos] = useState(0);
 
     const totalVideos = 4;
@@ -20,8 +24,12 @@ const Hero = () => {
     // 4 % 4 => 0 + 1 => 1 (upCommingVideoIndex)
     const upCommingVideoIndex = (currentVideoIndex % totalVideos) + 1;
 
-    console.log("upCommingVideoIndex", upCommingVideoIndex)
-    console.log("currentVideoIndex", currentVideoIndex)
+    // useEffect to handle loading state
+    useEffect(() => {
+        if(loadedMiniVideos === totalVideos - 1) {
+            setIsLoading(false);
+        }
+    }, [loadedMiniVideos])
 
     const handleMiniVideoClick = () => {
         setHasClickedMiniVideo(true);
@@ -37,10 +45,10 @@ const Hero = () => {
         if(hasClickedMiniVideo) {
 
             // When click mini video, set the next video to visible
-            gsap.set('#next-video', {visibility: 'visible'})
+            gsap.set('#full-video', {visibility: 'visible',})
 
             // When click mini video (next video) -> scale up to 100% (play video) 
-            gsap.to('#next-video', {
+            gsap.to('#full-video', {
                 transformOrigin: 'center center',
                 scale: 1,
                 width: '100%',
@@ -51,19 +59,50 @@ const Hero = () => {
             })
 
             // When click mini video (next video) -> scale from 0 to current video (mini video)
-            gsap.from('#current-video', {
+            gsap.from('#mini-video', {
                 transformOrigin: 'center center',
                 scale: 0,
-                duration: 10,
+                duration: 1.5,
                 ease: 'power1.inOut',
             })
         }
     }, {dependencies: [currentVideoIndex], revertOnUpdate: true})
 
+    // useGSAP to set Animation rectangle for video-frame when scroll down
+    useGSAP(() => {
+        // Set (final trapezoid) for video-frame (after scroll down)
+        const trapezoidVideoFrame = {clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)", borderRadius: "0 0 40% 10%"}
+        gsap.set("#video-frame", trapezoidVideoFrame)
+
+        // Set (initial rectangle) for video-frame (before scroll down)
+        const rectangleFullVideoFrame = {
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+            borderRadius: "0 0 0 0",
+            ease: 'power1.inOut',
+            scrollTrigger: {
+                trigger: '#video-frame',
+                start: 'center center',
+                end: 'bottom center',
+                scrub: true,
+            }}
+        gsap.from('#video-frame', rectangleFullVideoFrame)
+    }) 
+
+
     const getVideoSource = (index) => `videos/hero-${index}.mp4`;
       
   return (
     <div className='relative h-dvh w-screen overflow-x-hidden'>
+        {/* Loading Screen */}
+        {isLoading && (
+            <div className='flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50'>
+                <div className='three-body'>
+                    <div className='three-body__dot'></div>
+                    <div className='three-body__dot'></div>
+                    <div className='three-body__dot'></div>
+                </div>
+            </div>
+        )}
         <div id='video-frame' className='relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-50'>
             <div>
                 {/* Mini Video Player => Click to change video (index) */}
@@ -74,7 +113,7 @@ const Hero = () => {
                             src={getVideoSource(upCommingVideoIndex)} 
                             loop={true}
                             muted={true}
-                            id='current-video'
+                            id='mini-video'
                             className='size-64 origin-center scale-150 object-cover object-center'
                             onLoadedData={handleVideoLoad}
                         />
@@ -82,17 +121,18 @@ const Hero = () => {
                 </div>
 
                 {/* Used to created transition when click mini video  => change video index */}
+                {/* when clicked miniVideo currentVideoIndex has been updated  */}
                 <video
                     ref={nextVideoRef}
                     src={getVideoSource(currentVideoIndex)}
                     loop={true}
                     muted={true}
-                    id='next-video'
+                    id='full-video'
                     className='absolute-center invisible size-64 z-20 object-cover object-center'
                     onLoadedData={handleVideoLoad}
                 />
 
-                {/* Current Video Playing */}
+                {/* Display current video playing (full video) */}
                 <video
                     ref={nextVideoRef}
                     src={getVideoSource(currentVideoIndex)}
