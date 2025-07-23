@@ -136,7 +136,7 @@ const Hero = () => {
                 <video
                     ref={nextVideoRef}
                     src={getVideoSource(currentVideoIndex)}
-                    autoPlay={true} 
+                    // autoPlay={true} 
                     loop={true}
                     muted={true}
                     className='absolute-center left-0 top-0 size-full object-cover object-center'
