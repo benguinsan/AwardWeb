@@ -8,6 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
   useGSAP(() => {
+    // defined ScrollTrigger for clip-path animation. Start when scroll down to the center of the clip-path and End when scroll down 800px
+    // If you scroll to div with id "#clip" when scroll to center of the div, the animation will trigger and start animation
+    // After 800px from the center of the div, the animation will end and the clip-path will be full screen (100vw, 100vh)
     const clipAnimation = gsap.timeline({
         scrollTrigger: {
             trigger: '#clip',
@@ -19,6 +22,7 @@ const About = () => {
         }  
     })
 
+    // When scroll down, clip-path will be full screen (100vw, 100vh)
     clipAnimation.to('.mask-clip-path', {
         width: '100vw',
         height: '100vh',
