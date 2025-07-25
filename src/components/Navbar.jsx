@@ -23,7 +23,7 @@ const Navbar = () => {
   // Get current scroll position
   const { y: currentScrollY } = useWindowScroll();
 
-  // Handle scroll event
+  // Handle scroll event (logic scroll handling navbar)
   useEffect(() => {
     if(currentScrollY === 0) {
       setIsNavbarVisible(true);
@@ -41,7 +41,7 @@ const Navbar = () => {
     setLastScrollY(currentScrollY);
   }, [currentScrollY, lastScrollY])
 
-  // Depend on state isNavbarVisible, the navbar will be visibled
+  // Animation Navbar visible smoothly (animation handling navbar)
   useEffect(() => {
     gsap.to(navContainerRef.current, {
       y: isNavbarVisible ? 0 : -100,
@@ -56,7 +56,7 @@ const Navbar = () => {
     setIndicatorActive((prev) => !prev);
   }
 
-  // useEffect to handle audio play/pause when state changes
+  // useEffect to handle audio play/pause when state changes (logic audio handling)
   useEffect(() => {
     if(isPlayingAudio) {
       audioElementRef.current.play();
