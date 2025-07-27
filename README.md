@@ -1,12 +1,97 @@
-# React + Vite
+# AwardWeb - Gaming Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive gaming website built with React, Vite, and Tailwind CSS. Features smooth animations, 3D effects, and responsive design.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Interactive 3D Effects**: GSAP-powered animations and mouse interactions
+- **Responsive Design**: Optimized for all device sizes
+- **Modern UI**: Clean, gaming-themed interface with custom fonts
+- **Smooth Animations**: Advanced CSS animations and transitions
+- **Performance Optimized**: Built with Vite for fast development and production
 
-## Expanding the ESLint configuration
+## 📋 Prerequisites
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Before running this project, make sure you have:
+
+- **Node.js** (version 18 or higher)
+- **npm** or **yarn** package manager
+
+## 🛠️ Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd AwardWeb
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+   or if you're using yarn:
+   ```bash
+   yarn install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+   or
+   ```bash
+   yarn dev
+   ```
+
+4. **Open your browser**
+   Navigate to `http://localhost:5173` to view the application.
+
+## 📦 Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint to check code quality
+
+## 🎨 Technologies Used
+
+- **React 19** - UI framework
+- **Vite** - Build tool and dev server
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **GSAP** - Professional animation library
+- **React Icons** - Icon library
+- **React Use** - Collection of useful React hooks
+
+## 📁 Project Structure
+
+```
+AwardWeb/
+├── public/          # Static assets (images, fonts, videos)
+├── src/
+│   ├── components/  # React components
+│   ├── assets/      # Source assets
+│   ├── App.jsx      # Main app component
+│   └── main.jsx     # Entry point
+├── index.html       # HTML template
+└── package.json     # Dependencies and scripts
+```
+
+## 🎮 Gaming Theme
+
+This website showcases a gaming universe called "Zentry" with:
+- Interactive story sections
+- 3D image effects
+- Animated titles and transitions
+- Gaming-inspired design elements
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
